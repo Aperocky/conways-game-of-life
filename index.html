@@ -70,8 +70,16 @@
             </div>
             <div class="row paneling">
                 <button type="button" class="btn btn-primary inlineb" id="startgame">START</button>
-                <button type="button" class="btn btn-primary inlineb" id="stopgame">STOP</button>
-                <button type="button" class="btn btn-primary inlineb" id="seedgame">SEED</button>
+                <button type="button" class="btn btn-danger inlineb" id="stopgame">STOP</button>
+                <button type="button" class="btn btn-info inlineb" id="seedgame">SEED</button>
+                <button type="button" class="btn btn-success inlineb" id="statgame">STAT</button>
+            </div>
+            <div class="row paneling">
+                <p class="lead"> Rule: if a block is alive (represented by color white here), it will stay alive if 2 or 3 blocks adjacent to it is alive. If a block is not alive, it will come alive when 3 of the adjacent block is alive. <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wiki</a>
+                </p>
+                <p class="lead"> Press STAT to view a heat map of the current run</p>
+                <p class="lead"> Press SEED to generate a new initial state</p>
+                <p class="lead"> This canvas is borderless, such that the left edge are considered adjacent to the right edge</p>
             </div>
         </div>
     </div>

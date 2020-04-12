@@ -93,4 +93,23 @@ export class Game {
         this.state_count();
         return change_set;
     }
+
+    get_heatmap(): number[][] {
+        let max = 0;
+        for (let i = 0; i < this.size; i++) {
+            for (let j = 0; j < this.size; j++) {
+                if (this.stats[i][j] > max) {
+                    max = this.stats[i][j];
+                }
+            }
+        }
+        let heatmap = []
+        for (let i = 0; i < this.size; i++) {
+            heatmap[i] = [];
+            for (let j = 0; j < this.size; j++) {
+                heatmap[i][j] = this.stats[i][j] / max;
+            }
+        }
+        return heatmap;
+    }
 }
