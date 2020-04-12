@@ -40,6 +40,7 @@ function getSprite(toggle: boolean): PIXI.Sprite {
 }
 
 function generateContainer(): void {
+    run_state = false;
     mapContainer.removeChildren();
     game.initiate(0.2, SPRITE_COUNT);
     for (let i = 0; i < SPRITE_COUNT; i++) {
