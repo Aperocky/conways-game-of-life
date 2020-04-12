@@ -1,3 +1,5 @@
+# Python implementation, reference for javascript version
+
 import sys
 import numpy as np
 import matplotlib.pyplot as plt

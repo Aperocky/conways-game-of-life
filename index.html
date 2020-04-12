@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Rocky Li">
+
+    <title>Conway's Game Of Life</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <style type="text/css">
+        body {
+            background: #ddd;
+            margin: 0;
+            padding: 0;
+            min-height: 100%;
+        }
+        #mebody {
+            min-height: 85vh;
+        }
+        footer {
+            min-height: 15vh;
+        }
+        .row {
+            padding: 10px;
+        }
+        #siminfobox {
+            font-family: monospace;
+            color: #eee;
+            padding: 20px;
+            width: 500px;
+            height: 450px;
+            background: #222;
+            border-radius: 40px;
+            border: 10px solid #555;
+            overflow-y: auto;
+        }
+        .inlineb {
+            display: inline-block;
+            margin: 10px;
+        }
+        pre {
+            word-wrap: break-word;
+        }
+        .infofield {
+            padding: 0px;
+            margin: 0px;
+        }
+        .paneling {
+            margin-left: 0px;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container" id="mebody">
+    <div class="row">
+        <div class="col-md-7" id="mapspace">
+        </div>
+        <div class="col-md-5" id="controlPanel">
+            <div class="row paneling">
+                <p class="lead"> In memory of John Conway, who passed away on April 11, 2020 </p>
+                <p class="lead"><a href="https://github.com/Aperocky/conways-game-of-life">Source</a></p>
+            </div>
+            <div class="row paneling">
+                <button type="button" class="btn btn-primary inlineb" id="startgame">START</button>
+                <button type="button" class="btn btn-primary inlineb" id="stopgame">STOP</button>
+                <button type="button" class="btn btn-primary inlineb" id="seedgame">SEED</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="script.min.js"></script>
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; Rocky Li</p>
+    </div>
+</footer>
+</body>
+</html>
+

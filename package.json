@@ -1,0 +1,25 @@
+{
+  "name": "game_of_life",
+  "version": "1.0.0",
+  "description": "In Conway's memory",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aperocky/conways-game-of-life.git"
+  },
+  "author": "aperocky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Aperocky/conways-game-of-life/issues"
+  },
+  "homepage": "https://github.com/Aperocky/conways-game-of-life#readme",
+  "dependencies": {
+    "pixi.js": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^13.11.1"
+  }
+}
