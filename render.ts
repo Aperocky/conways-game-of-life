@@ -1,8 +1,11 @@
 import * as PIXI from "pixi.js";
 import { Game } from "./core/game";
 
+const MOBILE = window.screen.width < 640 ? true : false;
+let resolution = MOBILE ? 320 : 640;
+
 const app = new PIXI.Application({
-    width: 640, height: 640
+    width: resolution, height: resolution
 });
 let gamezone = document.getElementById("mapspace");
 gamezone.appendChild(app.view);
@@ -16,7 +19,7 @@ const statButton = document.getElementById("statgame");
 app.stage.addChild(mapContainer);
 
 const SPRITE_COUNT = 40;
-const SPRITE_SIZE = 16;
+const SPRITE_SIZE = MOBILE ? 8 : 16;
 const GREENSCALE = [30, 238];
 const REDSCALE = [1, 90];
 const BLUESCALE = [20, 90];
@@ -35,7 +38,8 @@ function getSprite(toggle: boolean): PIXI.Sprite {
         sprite.tint = 0x111111;
     }
     sprite.anchor.set(0.5);
-    sprite.scale.set(0.875);
+    let spriteSize = MOBILE ? 0.375 : 0.875;
+    sprite.scale.set(spriteSize);
     return sprite;
 }
 
@@ -70,7 +74,8 @@ function statsContainer(): void {
     for (let i = 0; i < SPRITE_COUNT; i++) {
         for (let j = 0; j < SPRITE_COUNT; j++) {
             let sprite = spriteMap[Game.indexstr(i,j)]
-            sprite.scale.set(1);
+            let spriteSize = MOBILE ? 0.5 : 1;
+            sprite.scale.set(spriteSize);
             sprite.tint = getTintOnHeatMap(heatmap[i][j]);
         }
     }
