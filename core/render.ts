@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import { Game } from "./core/game";
+import { Game } from "./game";
 
 const MOBILE = window.screen.width < 640 ? true : false;
 let resolution = MOBILE ? 320 : 640;

@@ -1,5 +1,5 @@
 build:
-	@tsc render.ts --resolveJsonModule --target es5
+	@tsc core/render.ts --resolveJsonModule --target es5 --outdir ./
 	@browserify render.js -o script.js
 	@uglifyjs script.js > script.min.js
 
