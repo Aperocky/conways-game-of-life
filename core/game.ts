@@ -1,11 +1,12 @@
 export class Game {
     state: boolean[][]; // Current state of the game
     n_count: number[][]; // Current neighbor count
-    stats: number[][]; // Cumulative time a spot had been positive
+    stats: number[][]; // Cumulative time a spot had been alive
+    age_map: number[][]; // Amount of time a spot have been alive, reset when state change.
     size: number; // Size of the map
 
     static indexstr(i: number, j: number): string {
-        return i.toString() + ":" + j.toString();
+        return JSON.stringify([i,j]);
     }
 
     initiate(chance=0.2, size=40) {
@@ -18,14 +19,17 @@ export class Game {
         this.state = [];
         this.stats = []
         this.n_count = [];
+        this.age_map = [];
         for (let i=0; i<size; i++) {
             this.state[i] = [];
             this.stats[i] = [];
             this.n_count[i] = [];
+            this.age_map[i] = [];
             for (let j=0; j<size; j++) {
                 this.state[i][j] = (Math.random() < 0.2) ? true : false;
                 this.n_count[i][j] = 0;
                 this.stats[i][j] = 0;
+                this.age_map[i][j] = 0;
             }
         }
     }
@@ -76,13 +80,17 @@ export class Game {
         let change_set: {[loc:string]: boolean} = {};
         for (let i=0; i<this.size; i++) {
             for (let j=0; j<this.size; j++) {
-                this.stats[i][j] += this.state[i][j] ? 1 : 0;
                 if (this.state[i][j]) {
+                    this.stats[i][j] += 1;
+                    this.age_map[i][j] += 1;
                     if (this.n_count[i][j] < 2 || this.n_count[i][j] > 3) {
                         this.state[i][j] = false;
                         change_set[Game.indexstr(i, j)] = false;
+                    } else {
+                        change_set[Game.indexstr(i, j)] = true;
                     }
                 } else {
+                    this.age_map[i][j] = 0;
                     if (this.n_count[i][j] == 3) {
                         this.state[i][j] = true;
                         change_set[Game.indexstr(i, j)] = true;

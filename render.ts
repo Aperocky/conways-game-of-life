@@ -20,9 +20,14 @@ app.stage.addChild(mapContainer);
 
 const SPRITE_COUNT = 40;
 const SPRITE_SIZE = MOBILE ? 8 : 16;
-const GREENSCALE = [30, 238];
-const REDSCALE = [1, 90];
-const BLUESCALE = [20, 90];
+
+// tint scales
+const HEATMAP_REDSCALE = [1, 90];
+const HEATMAP_GREENSCALE = [30, 238];
+const HEATMAP_BLUESCALE = [20, 90];
+const AGE_REDSCALE = [129, 212];
+const AGE_GREENSCALE = [0, 235];
+const AGE_BLUESCALE = [0, 242];
 const game = new Game();
 let spriteMap = {};
 let run_state = false;
@@ -33,9 +38,9 @@ function getSprite(toggle: boolean): PIXI.Sprite {
     let texture = PIXI.Texture.WHITE;
     let sprite = new PIXI.Sprite(texture);
     if (toggle) {
-        sprite.tint = 0xeeeeee;
+        sprite.tint = 0xd4ebf2;
     } else {
-        sprite.tint = 0x111111;
+        sprite.tint = 0x222222;
     }
     sprite.anchor.set(0.5);
     let spriteSize = MOBILE ? 0.375 : 0.875;
@@ -44,7 +49,6 @@ function getSprite(toggle: boolean): PIXI.Sprite {
 }
 
 function generateContainer(): void {
-    run_state = false;
     mapContainer.removeChildren();
     game.initiate(0.2, SPRITE_COUNT);
     for (let i = 0; i < SPRITE_COUNT; i++) {
@@ -64,31 +68,37 @@ function generateContainer(): void {
 function updateContainer(): void {
     let updates = game.update();
     for (let [loc, bool] of Object.entries(updates)) {
-        spriteMap[loc].tint = bool ? 0xeeeeee : 0x111111;
+        if (bool) {
+            let pos = JSON.parse(loc);
+            let age = game.age_map[pos[0]][pos[1]];
+            let age_scalar = (age > 25) ? 1 : age/25;
+            spriteMap[loc].tint = getTint(age_scalar, AGE_REDSCALE, AGE_GREENSCALE, AGE_BLUESCALE);
+        } else {
+            spriteMap[loc].tint = 0x222222;
+        }
     }
 }
 
 function statsContainer(): void {
-    run_state = false;
     let heatmap = game.get_heatmap();
     for (let i = 0; i < SPRITE_COUNT; i++) {
         for (let j = 0; j < SPRITE_COUNT; j++) {
             let sprite = spriteMap[Game.indexstr(i,j)]
             let spriteSize = MOBILE ? 0.5 : 1;
             sprite.scale.set(spriteSize);
-            sprite.tint = getTintOnHeatMap(heatmap[i][j]);
+            let heat_scalar = (heatmap[i][j]/0.6) > 1 ? 1 : heatmap[i][j]/0.6;
+            sprite.tint = getTint(heat_scalar, HEATMAP_REDSCALE, HEATMAP_GREENSCALE, HEATMAP_BLUESCALE);
         }
     }
 }
 
-function getTintOnHeatMap(heat: number): number {
-    // Any stats more than 60% of max will be max tint
-    let scalar = (heat/0.6) > 1 ? 1 : heat/0.6;
-    let getColor = (scalar: number, scale: number[]): number => {
-        return scale[1] - Math.floor(scalar * (scale[1] - scale[0]));
-    }
-    return getColor(scalar, REDSCALE) * 256 * 256 + getColor(scalar, GREENSCALE) * 256
-            + getColor(scalar, BLUESCALE);
+let getColor = (scalar: number, scale: number[]): number => {
+    return scale[1] - Math.floor(scalar * (scale[1] - scale[0]));
+}
+
+function getTint(scalar: number, redscale: number[], greenscale: number[], bluescale: number[]): number {
+    return getColor(scalar, redscale) * 256 * 256 + getColor(scalar, greenscale) * 256
+            + getColor(scalar, bluescale);
 }
 
 let run = () => {
@@ -113,9 +123,11 @@ stopButton.addEventListener("click", () => {
 });
 
 seedButton.addEventListener("click", () => {
+    run_state = false;
     generateContainer();
 });
 
 statButton.addEventListener("click", () => {
+    run_state = false;
     statsContainer();
 });
