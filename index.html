@@ -32,11 +32,11 @@
         #siminfobox {
             font-family: monospace;
             color: #eee;
-            padding: 20px;
+            padding: 10px;
             width: 500px;
-            height: 450px;
+            height: 60px;
             background: #222;
-            border-radius: 40px;
+            border-radius: 10px;
             border: 10px solid #555;
             overflow-y: auto;
         }
@@ -79,6 +79,10 @@
                 padding: 0px;
                 text-align: center;
             }
+            #siminfobox {
+                border: 5px solid #555;
+                width: 100%;
+            }
         }
     </style>
 </head>
@@ -98,6 +102,10 @@
                 <button type="button" class="btn btn-danger inlineb" id="stopgame">STOP</button>
                 <button type="button" class="btn btn-info inlineb" id="seedgame">SEED</button>
                 <button type="button" class="btn btn-success inlineb" id="statgame">STAT</button>
+            </div>
+            <div class="row paneling" id="siminfo">
+                <div id="siminfobox">
+                </div>
             </div>
             <div class="row paneling">
                 <p class="lead"> Rule: if a block is alive (represented by color white here), it will stay alive if 2 or 3 blocks adjacent to it is alive. If a block is not alive, it will come alive when 3 of the adjacent block is alive. <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Wiki</a>

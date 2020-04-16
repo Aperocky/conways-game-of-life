@@ -16,6 +16,7 @@ const startButton = document.getElementById("startgame");
 const stopButton = document.getElementById("stopgame");
 const seedButton = document.getElementById("seedgame");
 const statButton = document.getElementById("statgame");
+const infoBox = document.getElementById("siminfobox");
 app.stage.addChild(mapContainer);
 
 const SPRITE_COUNT = 40;
@@ -48,6 +49,18 @@ function getSprite(toggle: boolean): PIXI.Sprite {
     return sprite;
 }
 
+function updateInfo(): void {
+    while (infoBox.firstChild) {
+        infoBox.removeChild(infoBox.firstChild);
+    }
+    infoBox.appendChild((() => {
+        let pre = document.createElement("pre");
+        pre.textContent = `iteration ${game.turns}\t flips: ${game.flips}`;
+        pre.style.color = "#eee";
+        return pre;
+    })());
+}
+
 function generateContainer(): void {
     mapContainer.removeChildren();
     game.initiate(0.2, SPRITE_COUNT);
@@ -63,10 +76,12 @@ function generateContainer(): void {
     }
     mapContainer.x = SPRITE_SIZE/2;
     mapContainer.y = SPRITE_SIZE/2;
+    updateInfo();
 }
 
 function updateContainer(): void {
     let updates = game.update();
+    updateInfo();
     for (let [loc, bool] of Object.entries(updates)) {
         if (bool) {
             let pos = JSON.parse(loc);

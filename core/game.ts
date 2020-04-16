@@ -4,6 +4,8 @@ export class Game {
     stats: number[][]; // Cumulative time a spot had been alive
     age_map: number[][]; // Amount of time a spot have been alive, reset when state change.
     size: number; // Size of the map
+    turns: number; // Number of turn elapsed after initial turn.
+    flips: number; // Cumulative numbers of time a spot have came alive.
 
     static indexstr(i: number, j: number): string {
         return JSON.stringify([i,j]);
@@ -13,6 +15,8 @@ export class Game {
         this.size = size;
         this.initiate_map(chance, size);
         this.state_count();
+        this.turns = 0;
+        this.flips = 0;
     }
 
     initiate_map(chance=0.2, size=40) {
@@ -77,6 +81,7 @@ export class Game {
     }
 
     update(): {[loc:string]: boolean} {
+        this.turns += 1;
         let change_set: {[loc:string]: boolean} = {};
         for (let i=0; i<this.size; i++) {
             for (let j=0; j<this.size; j++) {
@@ -93,6 +98,7 @@ export class Game {
                     this.age_map[i][j] = 0;
                     if (this.n_count[i][j] == 3) {
                         this.state[i][j] = true;
+                        this.flips += 1;
                         change_set[Game.indexstr(i, j)] = true;
                     }
                 }
